@@ -8,42 +8,48 @@ function App() {
   const [numbersAllowed, setnumbrsAllowed]=useState(false)
   const [characterAllowed, setcharacterAllowed]=useState(false)
   const [password, setpassword]=useState()
+  //Creating Hooks(state,ref,effect,callback)
 
 
   const passwordref =useRef(null)
+  //for copy Highlight function
 
 
+  //generating password function
   const generatePassword = useCallback(() =>
   {
     let pass=""
     let str="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
 
-
+  //for cases like symbols and numbers
     if(numbersAllowed ==true) str += "0123456789"
     if(characterAllowed) str+= "!@#$%^&*()_+"
-
+//loop to iterate random keys
     for(let i=1 ;i<length;i++)
     {
       const char =Math.floor(Math.random() *str.length +1)
       pass+= str.charAt(char)
     }
 
+    //calling setpassword and assigning the generated password
     setpassword(pass)
 
   }, [length, numbersAllowed, characterAllowed])
 
+  //copy function
   const copyPasswordToClipboard =()=>
   {
     window.navigator.clipboard.writeText(password)
     passwordref.current?.select()
   }
 
+  //To reflect on any effect in the webpage
   useEffect(() =>
   {
     generatePassword()
   }, [length, characterAllowed, numbersAllowed])
   
-
+//HTML
   return (
    <div>
     
@@ -51,6 +57,7 @@ function App() {
 
   <div>
 
+    
     <input
     type="text"
     value={password}
